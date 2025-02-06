@@ -203,18 +203,19 @@ ui.BarUpdate = function()
 		local hp = UnitHealth(this.guid)
 		if GetLocale() == "zhCN" then
 			if hp then
-				if hp >= 10000 then
+				if hp >= 100000000 then  -- 1亿
+					hp = math.floor(hp / 10000000) / 10 .. "亿"
+				elseif hp >= 10000 then  -- 1万
 					hp = math.floor(hp / 1000) / 10 .. "万"
-					-- elseif hp >= 1000 then
-					-- 	hp = math.floor(hp / 100) / 10 .. "k"
 				end
 			end
 		else
-			-- convert hp to k if > 1000
 			if hp then
-				if hp >= 1000000 then
+				if hp >= 1000000000 then  -- 1B
+					hp = math.floor(hp / 100000000) / 10 .. "b"
+				elseif hp >= 1000000 then -- 1M
 					hp = math.floor(hp / 100000) / 10 .. "m"
-				elseif hp >= 1000 then
+				elseif hp >= 1000 then    -- 1K
 					hp = math.floor(hp / 100) / 10 .. "k"
 				end
 			end
@@ -308,7 +309,7 @@ local function CreateBarSecondSection(unitFrame, guid)
 
 		local hp = healthBar:CreateFontString(nil, "HIGH", "GameFontWhite")
 		hp:SetPoint("TOPRIGHT", healthBar, "TOPRIGHT", -2, -2)
-		hp:SetWidth(30)
+		hp:SetWidth(50)
 		hp:SetHeight(config.height - 4)
 		hp:SetFont(STANDARD_TEXT_FONT, config.textsize, "THINOUTLINE")
 		hp:SetJustifyH("RIGHT")
